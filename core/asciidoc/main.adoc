@@ -6,7 +6,7 @@ To login to your virtual data center open a terminal session and use the credent
 
 [source,bash,subs=attributes+]
 ----
-ssh {dc}@{externalip} 
+ssh {dc}@{externalip}
 ----
 
 Once logged in run the following command to confirm that you have several docker containers running
@@ -41,7 +41,7 @@ image::./images/1_mysql.png[]
 
 === Database Schema
 
-The MySQL database contains a simple schema that includes _Customer_, _Supplier_, _Product_, _Sales Order_ and _Purchase Order_ information. 
+The MySQL database contains a simple schema that includes _Customer_, _Supplier_, _Product_, _Sales Order_ and _Purchase Order_ information.
 
 The idea behind this schema is simple, customers order products from a company and sales orders get created, the company then sends purchase orders to their suppliers so that product demand can be met by maintaining sensible stock levels.
 
@@ -103,23 +103,23 @@ There's an extra table here called `{dc}_out_of_stock_events` that not in the sc
 [source,bash]
 ----
 SELECT * from (
-  SELECT 'customers' as table_name, COUNT(*) FROM customers 
-  UNION 
-  SELECT 'products' as table_name, COUNT(*) FROM products 
-  UNION 
-  SELECT 'suppliers' as table_name, COUNT(*) FROM suppliers 
-  UNION 
-  SELECT 'sales_orders' as table_name, COUNT(*) FROM sales_orders 
-  UNION 
-  SELECT 'sales_order_details' as table_name, COUNT(*) FROM sales_order_details 
-  UNION 
-  SELECT 'purchase_orders' as table_name, COUNT(*) FROM purchase_orders 
-  UNION 
-  SELECT 'purchase_order_details' as table_name, COUNT(*) FROM purchase_order_details 
+  SELECT 'customers' as table_name, COUNT(*) FROM customers
+  UNION
+  SELECT 'products' as table_name, COUNT(*) FROM products
+  UNION
+  SELECT 'suppliers' as table_name, COUNT(*) FROM suppliers
+  UNION
+  SELECT 'sales_orders' as table_name, COUNT(*) FROM sales_orders
+  UNION
+  SELECT 'sales_order_details' as table_name, COUNT(*) FROM sales_order_details
+  UNION
+  SELECT 'purchase_orders' as table_name, COUNT(*) FROM purchase_orders
+  UNION
+  SELECT 'purchase_order_details' as table_name, COUNT(*) FROM purchase_order_details
 ) row_counts;
 ----
 
-As you can see, we have 30 customers, suppliers and products, 0 sales orders and 1 purchase order. 
+As you can see, we have 30 customers, suppliers and products, 0 sales orders and 1 purchase order.
 
 [source,bash]
 ----
@@ -223,7 +223,7 @@ Sales Order 9 Created
 
 Press `ctrl-c` to quit
 
-We now have sales orders being automatically created for us. 
+We now have sales orders being automatically created for us.
 
 To confirm this, start the MySQL CLI again
 
@@ -237,19 +237,19 @@ Re-run the row count script multiple times to confirm that the number of sales o
 [source,bash]
 ----
 SELECT * from (
-  SELECT 'customers' as table_name, COUNT(*) FROM customers 
-  UNION 
-  SELECT 'products' as table_name, COUNT(*) FROM products 
-  UNION 
-  SELECT 'suppliers' as table_name, COUNT(*) FROM suppliers 
-  UNION 
-  SELECT 'sales_orders' as table_name, COUNT(*) FROM sales_orders 
-  UNION 
-  SELECT 'sales_order_details' as table_name, COUNT(*) FROM sales_order_details 
-  UNION 
-  SELECT 'purchase_orders' as table_name, COUNT(*) FROM purchase_orders 
-  UNION 
-  SELECT 'purchase_order_details' as table_name, COUNT(*) FROM purchase_order_details 
+  SELECT 'customers' as table_name, COUNT(*) FROM customers
+  UNION
+  SELECT 'products' as table_name, COUNT(*) FROM products
+  UNION
+  SELECT 'suppliers' as table_name, COUNT(*) FROM suppliers
+  UNION
+  SELECT 'sales_orders' as table_name, COUNT(*) FROM sales_orders
+  UNION
+  SELECT 'sales_order_details' as table_name, COUNT(*) FROM sales_order_details
+  UNION
+  SELECT 'purchase_orders' as table_name, COUNT(*) FROM purchase_orders
+  UNION
+  SELECT 'purchase_order_details' as table_name, COUNT(*) FROM purchase_order_details
 ) row_counts;
 ----
 
@@ -330,16 +330,16 @@ Server: Jetty(9.4.20.v20190813)
 
 === View Messages in Confluent Control Center
 
-Now that the MySQL source connector is up and running, we will be able to see messages appear in our local Kafka cluster. 
+Now that the MySQL source connector is up and running, we will be able to see messages appear in our local Kafka cluster.
 
-We can use link:http://{externalip}:9021[Confluent Control Center, window=_blank] to confirm this. 
+We can use link:http://{externalip}:9021[Confluent Control Center, window=_blank] to confirm this.
 
 Use the following and username and password to authenticate to Confluent Control Center
 
 [source,bash,subs="attributes"]
 ----
 Username: {dc}
-Password: <your workshop password>
+Password: your workshop password
 ----
 
 image::./images/c3_05.png[]
@@ -437,7 +437,7 @@ Server: Jetty(9.4.20.v20190813)
 
 Jump back to link:http://{externalip}:9021[Confluent Control Center, window=_blank]
 
-Select the "CC" cluster from the left-hand navigation bar and then select "Topics". 
+Select the "CC" cluster from the left-hand navigation bar and then select "Topics".
 
 This Confluent Cloud Instance is being shared by other users of the workshop and as a result you will see topics being replicated from other data centers. To see just your topics, type your data center name, {dc}, into the search box at the top to filter.
 
@@ -586,7 +586,7 @@ Press `ctrl-c` to stop
 
 [TIP]
 ====
-The events streaming from the MySQL database are serialized with Avro and as a result you will see some special characters in the above output, this is because the "PRINT TOPIC" command uses the String deserializer. 
+The events streaming from the MySQL database are serialized with Avro and as a result you will see some special characters in the above output, this is because the "PRINT TOPIC" command uses the String deserializer.
 ====
 
 === KSQL Streams
@@ -635,7 +635,7 @@ To view your current streams run the following command:-
 SHOW STREAMS;
 ----
 
-Notice that each stream is mapped to an underlying Kafka topic and that the format is AVRO. 
+Notice that each stream is mapped to an underlying Kafka topic and that the format is AVRO.
 
 [source,sql,subs="attributes"]
 ----
@@ -696,8 +696,8 @@ There are two types of query in KSQL, *Push* queries and *Pull* queries.
 
 Another important point to understand is where within a topic a query starts to read from. You can control this behaviour using the `ksql.streams.auto.offset.reset` property. This property can either be set to `earliest` where data is consumed from the very beginning of the topic or `latest` where only new data is consumed.
 
-To see the current values for _all_ properties run the following command 
- 
+To see the current values for _all_ properties run the following command
+
 [source,bash,subs="quotes,attributes"]
 ----
 SHOW PROPERTIES;
@@ -707,11 +707,11 @@ Look out for a property called `ksql.streams.auto.offset.reset`, it should be se
 
 [source,bash,subs="attributes"]
 ----
- Property                                               | Default override | Effective Value                                                                 
+ Property                                               | Default override | Effective Value
 --------------------------------------------------------------------------------------------
- ...          
+ ...
  ksql.streams.auto.offset.reset                         |                  | latest
- ...                                             
+ ...
 --------------------------------------------------------------------------------------------
 ksql>
 ----
@@ -737,12 +737,12 @@ Let's start by running a Push query and consume all messages from the beginning 
 [source,sql,subs="quotes,attributes"]
 ----
 *SET* 'auto.offset.reset'='earliest';
-*SELECT*  id, 
-        sales_order_id, 
-        product_id, 
-        quantity, 
-        price 
-*FROM*  sales_order_details 
+*SELECT*  id,
+        sales_order_id,
+        product_id,
+        quantity,
+        price
+*FROM*  sales_order_details
 *EMIT CHANGES*;
 ----
 
@@ -780,12 +780,12 @@ To inspect a bounded set of data, you can use the `LIMIT` clause.
 
 [source,sql,subs="quotes,attributes"]
 ----
-*SELECT*  id, 
-        sales_order_id, 
-        product_id, 
-        quantity, 
-        price 
-*FROM*  sales_order_details 
+*SELECT*  id,
+        sales_order_id,
+        product_id,
+        quantity,
+        price
+*FROM*  sales_order_details
 *EMIT CHANGES*
 *LIMIT* 10;
 ----
@@ -818,11 +818,11 @@ Since KSQL is based on SQL, you can do many of the standard SQL things you'd exp
 [source,sql,subs="quotes,attributes"]
 ----
 *SET* 'auto.offset.reset'='latest';
-*SELECT*  id, 
-        product_id, 
+*SELECT*  id,
+        product_id,
         quantity
 *FROM*    sales_order_details
-*WHERE*   quantity > 3 
+*WHERE*   quantity > 3
 *EMIT CHANGES*;
 ----
 
@@ -918,7 +918,7 @@ We can confirm that the new stream has the correct key by running the `DESCRIBE 
 *DESCRIBE EXTENDED* customers_rekeyed;
 ----
 
-You can see in the output that the `Key Field` is now set correctly. 
+You can see in the output that the `Key Field` is now set correctly.
 
 [source,sql,subs="quotes,attributes"]
 ----
@@ -959,7 +959,7 @@ messages-per-sec:      0.30   total-messages:        30     last-message: 2020-0
 (Statistics of the local KSQL server interaction with the Kafka topic dc01_customers_rekeyed)
 ----
 
-In the above output also notice the `Queries that write from this STREAM` section, here you can see the query you just ran, this a called a persistant query and runs in the background continuously streaming messages until it is terminated. 
+In the above output also notice the `Queries that write from this STREAM` section, here you can see the query you just ran, this a called a persistant query and runs in the background continuously streaming messages until it is terminated.
 
 You can view the current persistant queries that are running using the following command:-
 
@@ -970,7 +970,7 @@ SHOW QUERIES;
 
 [source,sql,subs="quotes,attributes"]
 ----
- Query ID                  | Kafka Topic       | Query String                                                 
+ Query ID                  | Kafka Topic       | Query String
 --------------------------------------------------------------------------------------------------------------
  CSAS_CUSTOMERS_REKEYED_10 | CUSTOMERS_REKEYED | CREATE STREAM CUSTOMERS_REKEYED WITH (KAFKA_TOPIC='{dc}_customers_rekeyed', PARTITIONS=1, REPLICAS=3) AS SELECT *
 FROM CUSTOMERS CUSTOMERS
@@ -1046,7 +1046,7 @@ Query terminated
 
 === Creating Tables
 
-We are now in a position where we can create our first KSQL tables. To do this we need to register tables with KSQL over the newly re-keyed topics. 
+We are now in a position where we can create our first KSQL tables. To do this we need to register tables with KSQL over the newly re-keyed topics.
 
 [source,sql,subs="quotes,attributes"]
 ----
@@ -1107,7 +1107,7 @@ In the example below you can see that we have specified a window of 1 seconds us
 
 image::./images/ksql_006.png[align="center"]
 
-If we query this new stream... 
+If we query this new stream...
 
 [source,sql,subs="quotes,attributes"]
 ----
@@ -1118,8 +1118,8 @@ If we query this new stream...
         product_id,
         quantity,
         price
-*FROM*  sales_enriched_01 
-*EMIT CHANGES* 
+*FROM*  sales_enriched_01
+*EMIT CHANGES*
 *LIMIT* 10;
 ----
 
@@ -1153,7 +1153,7 @@ Query terminated
 
 == Lab 10: KSQL Stream-to-Table Joins
 
-We can take this a step further by joining this new stream to a couple of the KSQL tables we created earlier. 
+We can take this a step further by joining this new stream to a couple of the KSQL tables we created earlier.
 
 To do this we'll need to create a new stream, `sales_enriched_02`, that'll stream the result of joining the `sales_enriched_01` stream to the `customers_tbl` table.
 
@@ -1172,7 +1172,7 @@ To do this we'll need to create a new stream, `sales_enriched_02`, that'll strea
     ct.last_name,
     ct.email,
     ct.city,
-    ct.country 
+    ct.country
 *FROM* sales_enriched_01 se
 *INNER JOIN* customers_tbl ct *ON* (se.customer_id = ct.id);
 ----
@@ -1188,7 +1188,7 @@ And last but not least we can join to our products table by creating our final s
     se.order_details_id,
     se.order_date,
     se.product_id product_id,
-    pt.name product_name, 
+    pt.name product_name,
     pt.description product_desc,
     se.price product_price,
     se.quantity product_qty,
@@ -1204,7 +1204,7 @@ And last but not least we can join to our products table by creating our final s
 
 image::./images/ksql_008.png[align="center"]
 
-If we run a describe on this stream... 
+If we run a describe on this stream...
 
 [source,sql,subs="quotes,attributes"]
 ----
@@ -1257,7 +1257,7 @@ Join the `purchase_orders` stream to the `purchase_order_details` stream
 
 image::./images/ksql_009.png[align="center"]
 
-If we query this new stream... 
+If we query this new stream...
 
 [source,sql,subs="quotes,attributes"]
 ----
@@ -1268,8 +1268,8 @@ If we query this new stream...
         product_id,
         quantity,
         cost
-*FROM*  purchases_enriched_01 
-*EMIT CHANGES* 
+*FROM*  purchases_enriched_01
+*EMIT CHANGES*
 *LIMIT* 10;
 ----
 
@@ -1309,7 +1309,7 @@ Join the `purchases_enriched_01` stream to the `suppliers_tbl` table...
     st.name,
     st.email,
     st.city,
-    st.country 
+    st.country
 *FROM* purchases_enriched_01 pe
 *INNER JOIN* suppliers_tbl st *ON* (pe.supplier_id = st.id);
 ----
@@ -1325,7 +1325,7 @@ image::./images/ksql_010.png[align="center"]
     pe.order_details_id,
     pe.order_date,
     pe.product_id product_id,
-    pt.name product_name, 
+    pt.name product_name,
     pt.description product_desc,
     pe.cost product_cost,
     pe.quantity product_qty,
@@ -1377,10 +1377,10 @@ Let's query the `purchases_enriched` stream from the very beginning
 [source,sql,subs="quotes,attributes"]
 ----
 *SET* 'auto.offset.reset'='earliest';
-*SELECT* product_id, 
-       product_name, 
-       product_qty 
-*FROM* purchases_enriched 
+*SELECT* product_id,
+       product_name,
+       product_qty
+*FROM* purchases_enriched
 *EMIT CHANGES*;
 ----
 
@@ -1437,9 +1437,9 @@ Let's have a go at this now by creating a new stream called `product_supply_and_
 [source,sql,subs="quotes,attributes"]
 ----
 *SET* 'auto.offset.reset'='earliest';
-*CREATE STREAM* product_supply_and_demand *WITH* (PARTITIONS=1, KAFKA_TOPIC='{dc}_product_supply_and_demand') *AS SELECT* 
-  product_id, 
-  product_qty * -1 "QUANTITY" 
+*CREATE STREAM* product_supply_and_demand *WITH* (PARTITIONS=1, KAFKA_TOPIC='{dc}_product_supply_and_demand') *AS SELECT*
+  product_id,
+  product_qty * -1 "QUANTITY"
 *FROM* sales_enriched;
 ----
 
@@ -1450,14 +1450,14 @@ Let's have a quick look at the first few rows of this stream
 [source,sql,subs="quotes,attributes"]
 ----
 *SET* 'auto.offset.reset'='earliest';
-*SELECT*  product_id, 
-        quantity 
-*FROM*    product_supply_and_demand 
-*EMIT CHANGES* 
+*SELECT*  product_id,
+        quantity
+*FROM*    product_supply_and_demand
+*EMIT CHANGES*
 *LIMIT* 20;
 ----
 
-This query shows a history of all sales and their affect on stock levels. 
+This query shows a history of all sales and their affect on stock levels.
 
 [source,sql,subs="quotes,attributes"]
 ----
@@ -1492,9 +1492,9 @@ What we need to do now is also include all product purchases in the same stream.
 
 [source,sql,subs="quotes,attributes"]
 ----
-*INSERT INTO* product_supply_and_demand 
-  *SELECT*  product_id, 
-          product_qty "QUANTITY" 
+*INSERT INTO* product_supply_and_demand
+  *SELECT*  product_id,
+          product_qty "QUANTITY"
   *FROM*    purchases_enriched;
 ----
 
@@ -1507,9 +1507,9 @@ We can see the demand for a single product by filtering on the `product_id` and 
 [source,sql,subs="quotes,attributes"]
 ----
 *SET* 'auto.offset.reset'='earliest';
-*SELECT*  product_id, 
-        quantity 
-*FROM*    product_supply_and_demand 
+*SELECT*  product_id,
+        quantity
+*FROM*    product_supply_and_demand
 *WHERE* product_id = 1
 *AND*   quantity < 0
 *EMIT CHANGES*;
@@ -1541,9 +1541,9 @@ We can also see the supply for a single product by filtering on the `product_id`
 [source,sql,subs="quotes,attributes"]
 ----
 *SET* 'auto.offset.reset'='earliest';
-*SELECT*  product_id, 
-        quantity 
-*FROM*    product_supply_and_demand 
+*SELECT*  product_id,
+        quantity
+*FROM*    product_supply_and_demand
 *WHERE* product_id = 1
 *AND*   quantity > 0
 *EMIT CHANGES*;
@@ -1564,16 +1564,16 @@ We're now is a position where we can calculate the current stock level for each 
 [source,sql,subs="quotes,attributes"]
 ----
 *SET* 'auto.offset.reset'='earliest';
-*CREATE TABLE* current_stock *WITH* (PARTITIONS = 1, KAFKA_TOPIC = '{dc}_current_stock') *AS SELECT* 
+*CREATE TABLE* current_stock *WITH* (PARTITIONS = 1, KAFKA_TOPIC = '{dc}_current_stock') *AS SELECT*
       product_id
-    , SUM(quantity) "STOCK_LEVEL" 
+    , SUM(quantity) "STOCK_LEVEL"
 *FROM* product_supply_and_demand
 *GROUP BY* product_id;
 ----
 
 image::./images/ksql_014.png[align="center"]
 
-When we query this table with a Push query... 
+When we query this table with a Push query...
 
 [source,sql,subs="quotes,attributes"]
 ----
@@ -1584,7 +1584,7 @@ When we query this table with a Push query...
 *EMIT CHANGES*;
 ----
 
-...each new event that is displayed on the console reflects the current stock level for the associated product, a new event will be emitted  each time a product's stock level changes. 
+...each new event that is displayed on the console reflects the current stock level for the associated product, a new event will be emitted  each time a product's stock level changes.
 Depending on how long it took you to get to this point in the workshop, you may see that all your stock levels are negative. This is because, apart from the initial purchase order for 100 of each product, we have not created any more purchase orders and our customers will have their orders on hold until we acquire more stock, not good, but we'll fix that soon.
 
 .Further Reading
@@ -1660,7 +1660,7 @@ As you can see, the KSQL Server's REST endpoint will return a JSON message with 
 
 == Lab 13: Streaming Recent Product Demand
 
-Now that we know the current stock level is for each product, we can use this information to send an event to the orders application and ask it to create purchase orders to replenish the stock, but how much should we stock should we order? we could just order enough to satisfy the current backlog but we'd quickly run out of stock again. 
+Now that we know the current stock level is for each product, we can use this information to send an event to the orders application and ask it to create purchase orders to replenish the stock, but how much should we stock should we order? we could just order enough to satisfy the current backlog but we'd quickly run out of stock again.
 
 What we really want to do is order enough to satisfy the backlog _and_ enough to meet future demand, we can make an attempt at predicting what the future demand will be by looking at the past.
 
@@ -1668,10 +1668,18 @@ In the following query we are creating a table that will calculate the demand fo
 
 Hopping windows are based on time intervals. They model fixed-sized, possibly overlapping windows. A hopping window is defined by two properties: the window’s duration and its advance, or “hop”, interval. The advance interval specifies how far a window moves forward in time relative to the previous window. In our query we we have a window with a duration of three minutes and an advance interval of one minute. Because hopping windows can overlap, a record can belong to more than one such window.
 
+Start the KSQL CLI if you haven't already
+[source,bash,subs=attributes+]
+----
+docker exec -it ksql-cli ksql http://ksql-server-ccloud:8088
+----
+
+Create the windowed query
+
 [source,sql,subs="quotes,attributes"]
 ----
 *SET* 'auto.offset.reset'='earliest';
-*CREATE TABLE* product_demand_last_3mins_tbl *WITH* (PARTITIONS = 1, KAFKA_TOPIC = '{dc}_product_demand_last_3mins') 
+*CREATE TABLE* product_demand_last_3mins_tbl *WITH* (PARTITIONS = 1, KAFKA_TOPIC = '{dc}_product_demand_last_3mins')
 *AS SELECT*
       timestamptostring(windowStart(),'HH:mm:ss') "WINDOW_START_TIME"
     , timestamptostring(windowEnd(),'HH:mm:ss') "WINDOW_END_TIME"
@@ -1751,8 +1759,8 @@ Now that we have the `current_stock` table and `product_demand_last_3mins` strea
 [source,sql,subs="quotes,attributes"]
 ----
 *SET* 'auto.offset.reset' = 'latest';
-*CREATE STREAM* out_of_stock_events *WITH* (PARTITIONS = 1, KAFKA_TOPIC = '{dc}_out_of_stock_events') 
-*AS SELECT* 
+*CREATE STREAM* out_of_stock_events *WITH* (PARTITIONS = 1, KAFKA_TOPIC = '{dc}_out_of_stock_events')
+*AS SELECT*
   cs.product_id "PRODUCT_ID",
   pd.window_start_time,
   pd.window_end_time,
@@ -1760,7 +1768,7 @@ Now that we have the `current_stock` table and `product_demand_last_3mins` strea
   pd.demand_last_3mins,
   (cs.stock_level * -1) + pd.DEMAND_LAST_3MINS "QUANTITY_TO_PURCHASE"
 *FROM* product_demand_last_3mins pd
-*INNER JOIN* current_stock cs *ON* pd.product_id = cs.product_id 
+*INNER JOIN* current_stock cs *ON* pd.product_id = cs.product_id
 *WHERE* stock_level <= 0;
 ----
 
@@ -1776,12 +1784,12 @@ When we query the `out_of_stock_events` stream...
        window_end_time,
        stock_level,
        demand_last_3mins,
-       quantity_to_purchase 
+       quantity_to_purchase
 *FROM* out_of_stock_events
 *EMIT CHANGES*;
 ----
 
-...you'll see a constant stream of _out of stock products_ and the predicted purchase quantity that should be ordered to satisfy any current backlog and also meet the next 3 minutes demand.   
+...you'll see a constant stream of _out of stock products_ and the predicted purchase quantity that should be ordered to satisfy any current backlog and also meet the next 3 minutes demand.
 
 [source,sql,subs="quotes,attributes"]
 ----
@@ -1821,11 +1829,11 @@ image::./images/5_replicate_to_onprem.png[]
 
 Before we do that, let's create the target topic in our on-premise Kafka cluster using link:http://{externalip}:9021[Confluent Control Center, window=_blank]
 
-Select your on-premise cluster from the left-hand navigation bar, select _"topics"_ and then click on _"Add a Topic"_. 
+Select your on-premise cluster from the left-hand navigation bar, select _"topics"_ and then click on _"Add a Topic"_.
 
 image::./images/c3_80.png[]
 
-Name the topic `{dc}_out_of_stock_events` and click _"Create with defaults"_
+Name the topic `{dc}_out_of_stock_events` with one partition and click _"Create with defaults"_
 
 image::./images/c3_90.png[]
 
